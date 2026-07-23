@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   ShoppingBag, Clock, CheckCircle, XCircle, ChevronDown, ChevronUp,
   MapPin, Phone, Package, Loader2, ArrowLeft, CalendarDays, Truck,
-  Store, Search, RefreshCw, Star, MessageSquare,
+  Store, RefreshCw, Star,
 } from "lucide-react";
 import type { CustomerUser } from "../App";
 
@@ -706,8 +706,8 @@ const Orders = ({ onBack, customer }: Props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  const [phoneInput, setPhoneInput] = useState(customer?.phone ?? "");
-  const [trackedPhone, setTrackedPhone] = useState(customer?.phone ?? "");
+
+  const trackedPhone = customer?.phone ?? "";
 
   const isCustomerView = !!customer;
 
@@ -740,12 +740,7 @@ const Orders = ({ onBack, customer }: Props) => {
     fetchOrders(isCustomerView ? trackedPhone : undefined);
   }, []);
 
-  const handleTrack = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!phoneInput.trim()) return;
-    setTrackedPhone(phoneInput.trim());
-    fetchOrders(phoneInput.trim());
-  };
+
 
   const filtered = orders.filter((o) => {
     const q = search.toLowerCase();
